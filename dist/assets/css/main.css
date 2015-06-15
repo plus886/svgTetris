@@ -1,0 +1,35 @@
+#stage {
+  display: block;
+  margin: 0 auto;
+}
+.rect {
+  stroke-width: 1px;
+}
+.rect-color-0 {
+  fill: #ff8080;
+  stroke: #ff5252;
+}
+.rect-color-1 {
+  fill: #b388ff;
+  stroke: #7c4dff;
+}
+.rect-color-2 {
+  fill: #80d8ff;
+  stroke: #40c4ff;
+}
+.rect-color-3 {
+  fill: #aed581;
+  stroke: #7cb342;
+}
+.rect-color-4 {
+  fill: #ffd54f;
+  stroke: #ffb300;
+}
+.rect-color-5 {
+  fill: #ff9e80;
+  stroke: #ff6e40;
+}
+.rect-color-6 {
+  fill: #80cbc4;
+  stroke: #26a69a;
+}
