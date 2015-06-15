@@ -117,7 +117,7 @@ function gameStart() {
 
     // Insert a new block
     createNewBlock();
-    //resetTimer();
+    resetTimer();
 
 }
 
