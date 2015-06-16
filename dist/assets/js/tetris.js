@@ -22,7 +22,7 @@ var RECT_SIZE = 40;
 var DIFFICULTY = 2000;
 
 // Declare block pattern
-var SHAPESpattern_ = [
+var SHAPES_PATTERN = [
     {
         // Square
         id: 0,
@@ -90,9 +90,15 @@ var SHAPESpattern_ = [
 var blockCounter = 0;
 var currentBlock;
 var timer;
+var stage;
 var dataBoard;
-var viewBoard = "stage";
+var viewBoard = document.getElementById("stage");
 
+
+// Board size reset
+viewBoard.setAttribute("viewBox", "0 0 " + RECT_SIZE * COLS + " " + RECT_SIZE * ROWS);
+viewBoard.setAttribute("width", RECT_SIZE * COLS);
+viewBoard.setAttribute("height", RECT_SIZE * ROWS);
 
 
 
@@ -115,6 +121,8 @@ function gameStart() {
         .chunk(COLS)
         .value();
 
+    stage = new Stage();
+
     // Insert a new block
     createNewBlock();
     resetTimer();
@@ -125,8 +133,8 @@ function gameStart() {
 // For terminating the current game
 function gameOver() {
 
-    // Let the player know that "you are already dead..."
-    alert('Game Over!');
+    // Let the player know "you are already dead..."
+    alert("Game Over!");
 
     // Restart a new game
     gameStart();
@@ -150,7 +158,7 @@ function resetTimer() {
 function createNewBlock() {
 
     // Create a new block object, and assign it to currentBlock.
-    currentBlock = new Block(SHAPESpattern_[Math.floor(Math.random() * SHAPESpattern_.length)]);
+    currentBlock = new Block(SHAPES_PATTERN[Math.floor(Math.random() * SHAPES_PATTERN.length)]);
 
     var i = 0;
 
@@ -214,7 +222,7 @@ function deleteLine() {
 //==============================================================
 
 function Stage() {
-    this.view = document.getElementById(viewBoard);
+    this.view = viewBoard;
 }
 
 
@@ -239,7 +247,6 @@ Stage.prototype.render = function() {
 
 };
 
-var stage = new Stage();
 
 
 
@@ -392,7 +399,7 @@ Block.prototype.moveDown = function() {
 
     } else {
 
-        // If didn't passed validation, that means that some blocks already exist below,
+        // If didn't passed validation, that means some blocks already exist below,
         // therefore need to fix the current block.
         this.fix();
         return null;
@@ -413,8 +420,8 @@ Block.prototype.rotate = function() {
     var expects = this.pattern_[this.currentPattern_].map(function(element, i){
 
         // Set the origin of rotation to left-top.
-        var originX = _.min(this.currentRects, 'x').x;
-        var originY = _.min(this.currentRects, 'y').y;
+        var originX = _.min(this.currentRects, "x").x;
+        var originY = _.min(this.currentRects, "y").y;
 
         return {
             x: element[0] + originX,
@@ -428,8 +435,8 @@ Block.prototype.rotate = function() {
 
         // If passed validation, overwrite the currentBlock.
         this.currentRects = this.pattern_[this.currentPattern_].map(function(coords, i){
-            var originX = _.min(this.currentRects, 'x').x;
-            var originY = _.min(this.currentRects, 'y').y;
+            var originX = _.min(this.currentRects, "x").x;
+            var originY = _.min(this.currentRects, "y").y;
             return new Rect(this.color_, coords[0] + originX, coords[1] + originY);
         }, this);
 
@@ -455,7 +462,7 @@ Block.prototype.checkExpected = function(expected){
         c = dataBoard[expected[i].y][expected[i].x];
 
         // If some parts of the next block run off the edge, then return false.
-        if(typeof c === 'undefined') {
+        if(typeof c === "undefined") {
             return false;
         }
 
