@@ -22,7 +22,7 @@ var RECT_SIZE = 40;
 var DIFFICULTY = 2000;
 
 // Declare block pattern
-var SHAPESpattern_ = [
+var SHAPES_PATTERN = [
     {
         // Square
         id: 0,
@@ -90,6 +90,7 @@ var SHAPESpattern_ = [
 var blockCounter = 0;
 var currentBlock;
 var timer;
+var stage;
 var dataBoard;
 var viewBoard = "stage";
 
@@ -108,33 +109,13 @@ function gameStart() {
         .chunk(COLS)
         .value();
 
-    createNewBlock();
-    //resetTimer();
+    stage = new Stage();
+
+    //createNewBlock();
+    ////resetTimer();
 
 }
 
-
-
-function createNewBlock() {
-
-    currentBlock = new Block(SHAPESpattern_[Math.floor(Math.random() * SHAPESpattern_.length)]);
-
-    //var i = 0;
-    //
-    //// Check dataBoard cells whether the positions of the new block are already occupied.
-    //while(i < currentBlock.currentRects.length){
-    //    if(dataBoard[currentBlock.currentRects[i].y][currentBlock.currentRects[i].x] !== null) {
-    //        // if yes terminate game.
-    //        return gameOver();
-    //    }
-    //    i ++;
-    //}
-
-    currentBlock.set();
-
-    stage.render();
-
-}
 
 
 
@@ -166,72 +147,97 @@ Stage.prototype.render = function() {
 
 };
 
-var stage = new Stage();
+
+
+
+
+
+//function Rect(color, x, y) {
+//    this.className_ = "rect-color-" + color;
+//    this.x = x;
+//    this.y = y;
+//    this.blockId = blockCounter;
+//}
+//
+//Rect.prototype.set = function() {
+//    var rect = document.createElementNS(SVG_NS, "rect");
+//    rect.setAttribute("class", "rect " + this.className_);
+//    rect.setAttribute("width", RECT_SIZE);
+//    rect.setAttribute("height", RECT_SIZE);
+//    rect.setAttribute("x", this.x * RECT_SIZE);
+//    rect.setAttribute("y", this.y * RECT_SIZE);
+//    rect.setAttribute("data-block-id", this.blockId);
+//
+//    return rect;
+//};
+//
+//
+//
+//
+//
+//
+//function Block(type) {
+//    this.color_ = type.id;
+//    this.pattern_ = type.pattern;
+//    this.currentPattern_ = 0;
+//
+//    // Keep the current set of Rect objects.
+//    this.currentRects = this.pattern_[this.currentPattern_].map(function(coords){
+//        return new Rect(this.color_, coords[0], coords[1]);
+//    }, this);
+//}
+//
+//
+//
+//// For renewing position of the current block.
+//Block.prototype.set = function() {
+//
+//    // Renew dataBoard cells
+//    dataBoard = dataBoard.map(function(row){
+//        return row.map(function(col){
+//
+//            if(col !== null && col.blockId == blockCounter){
+//
+//                // Clear cells if they are occupied by the current block.
+//                return null;
+//
+//            }
+//
+//            return col;
+//        });
+//    });
+//
+//    // Assign current set of Rect objects to dataBoard.
+//    this.currentRects.forEach(function(rect){
+//        dataBoard[rect.y][rect.x] = rect;
+//    });
+//};
 
 
 
 
 
 
-function Rect(color, x, y) {
-    this.className_ = "rect-color-" + color;
-    this.x = x;
-    this.y = y;
-    this.blockId = blockCounter;
-}
-
-Rect.prototype.set = function() {
-    var rect = document.createElementNS(SVG_NS, "rect");
-    rect.setAttribute("class", "rect " + this.className_);
-    rect.setAttribute("width", RECT_SIZE);
-    rect.setAttribute("height", RECT_SIZE);
-    rect.setAttribute("x", this.x * RECT_SIZE);
-    rect.setAttribute("y", this.y * RECT_SIZE);
-    rect.setAttribute("data-block-id", this.blockId);
-
-    return rect;
-};
-
-
-
-
-
-function Block(type) {
-    this.color_ = type.id;
-    this.pattern_ = type.pattern;
-    this.currentPattern_ = 0;
-
-    // Keep the current set of Rect objects.
-    this.currentRects = this.pattern_[this.currentPattern_].map(function(coords){
-        return new Rect(this.color_, coords[0], coords[1]);
-    }, this);
-}
-
-
-
-// For renewing position of the current block.
-Block.prototype.set = function() {
-
-    // Renew dataBoard cells
-    dataBoard = dataBoard.map(function(row){
-        return row.map(function(col){
-
-            if(col !== null && col.blockId == blockCounter){
-
-                // Clear cells if they are occupied by the current block.
-                return null;
-
-            }
-
-            return col;
-        });
-    });
-
-    // Assign current set of Rect objects to dataBoard.
-    this.currentRects.forEach(function(rect){
-        dataBoard[rect.y][rect.x] = rect;
-    });
-};
+//function createNewBlock() {
+//
+//    currentBlock = new Block(SHAPES_PATTERN[Math.floor(Math.random() * SHAPES_PATTERN.length)]);
+//
+//    //var i = 0;
+//    //
+//    //// Check dataBoard cells whether the positions of the new block are already occupied.
+//    //while(i < currentBlock.currentRects.length){
+//    //    if(dataBoard[currentBlock.currentRects[i].y][currentBlock.currentRects[i].x] !== null) {
+//    //        // if yes terminate game.
+//    //        return gameOver();
+//    //    }
+//    //    i ++;
+//    //}
+//
+//    currentBlock.set();
+//
+//    stage.render();
+//
+//}
 
 
 
@@ -329,8 +335,8 @@ Block.prototype.set = function() {
 //    var expects = this.pattern_[this.currentPattern_].map(function(element, i){
 //
 //        // Set the origin of rotation to left-top.
-//        var originX = _.min(this.currentRects, 'x').x;
-//        var originY = _.min(this.currentRects, 'y').y;
+//        var originX = _.min(this.currentRects, "x").x;
+//        var originY = _.min(this.currentRects, "y").y;
 //
 //        return {
 //            x: element[0] + originX,
@@ -344,8 +350,8 @@ Block.prototype.set = function() {
 //
 //        // If passed validation, overwrite the currentBlock.
 //        this.currentRects = this.pattern_[this.currentPattern_].map(function(coords, i){
-//            var originX = _.min(this.currentRects, 'x').x;
-//            var originY = _.min(this.currentRects, 'y').y;
+//            var originX = _.min(this.currentRects, "x").x;
+//            var originY = _.min(this.currentRects, "y").y;
 //            return new Rect(this.color_, coords[0] + originX, coords[1] + originY);
 //        }, this);
 //
@@ -375,7 +381,7 @@ Block.prototype.set = function() {
 //        c = dataBoard[expected[i].y][expected[i].x];
 //
 //        // If some parts of the next block run off the edge, then return false.
-//        if(typeof c === 'undefined') {
+//        if(typeof c === "undefined") {
 //            return false;
 //        }
 //
@@ -417,7 +423,7 @@ Block.prototype.set = function() {
 
 //function gameOver() {
 //
-//    alert('Game Over!');
+//    alert("Game Over!");
 //
 //    gameStart();
 //
