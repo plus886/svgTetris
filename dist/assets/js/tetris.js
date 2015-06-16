@@ -454,7 +454,7 @@ Block.prototype.checkExpected = function(expected){
     while (i < expected.length) {
 
         // If the row number of next block exceeds maximum row number, then return false.
-        if(expected[i].y >= 20){
+        if(expected[i].y >= ROWS){
             return false;
         }
 
